@@ -1,0 +1,27 @@
+{
+  "name": "http-debug",
+  "version": "1.0.0",
+  "description": "node 抓包",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cycgit/http-debug.git"
+  },
+  "keywords": [
+    "node",
+    "http",
+    "proxy"
+  ],
+  "author": "cyc",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cycgit/http-debug/issues"
+  },
+  "homepage": "https://github.com/cycgit/http-debug#readme",
+  "dependencies": {
+    "express": "^4.13.4",
+  }
+}
