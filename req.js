@@ -3,6 +3,7 @@ function request(options, callback) {
   var req = http.request(options, (res) => {
     res.setEncoding('utf8');
     var d = ''
+    console.log(res.statusCode)
     res.on('data', (chunk) => {
       d+= chunk
       // console.log(`BODY: ${chunk}`);

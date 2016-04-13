@@ -8,11 +8,12 @@ var request = require('./req');
 
 const server = http.createServer((req, res) => {
 
-  request({hostname:'sun.aidaojia.com', path: '/xxx.html'}, (header, body) =>{
+  request({hostname:req.headers.host, path: req.url,headers: {'Connection':'keep-alive'}}, (header, body) =>{
 
     res.writeHead(200, header)
     res.end(body)
   })
+
 
 
 })
