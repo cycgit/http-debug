@@ -1,32 +1,16 @@
 const http = require('http')
-const url = require('url')
 
 const hostname = '127.0.0.1'
 const port = 9000
+var proxy = require('./req')
 
-var request = require('./req');
 
 const server = http.createServer((req, res) => {
-
-  request({hostname:req.headers.host, path: req.url,headers: {'Connection':'keep-alive'}}, (header, body) =>{
-
-    res.writeHead(200, header)
-    res.end(body)
-  })
-
-
-
+    proxy(req, res)
+    res.writeHead(200, {'Content-Type': 'text/plain'})
+    res.end('ok')
 })
 
 server.listen(port, hostname, () => {
   console.log(`Server running at http://${hostname}:${port}/`)
 })
-
-
-function show(obj) {
-  for(var name in obj){
-      if(name.indexOf('_') == -1){
-        console.log(name)
-      }
-  }
-}
