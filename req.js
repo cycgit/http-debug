@@ -1,29 +1,30 @@
 var http = require('http');
-
-var options = {
-  hostname: 'tms.aidaojia.com',
-  path: '/static/img/img8.jpg',
-  method: 'GET'
-};
-
-var req = http.request(options, (res) => {
-
-  console.log(`STATUS: ${res.statusCode}`);
-  console.log(`HEADERS: ${JSON.stringify(res.headers)}`);
-
-  res.setEncoding('utf8');
-
-  res.on('data', (chunk) => {
-      console.log(1);
-    // console.log(`BODY: ${chunk}`);
-  });
-  res.on('end', () => {
-    // console.log('No more data in response.')
+function request(options, callback) {
+  var req = http.request(options, (res) => {
+    res.setEncoding('utf8');
+    var d = ''
+    console.log(res.statusCode)
+    res.on('data', (chunk) => {
+      d+= chunk
+      // console.log(`BODY: ${chunk}`);
+    });
+    res.on('end', () => {
+      // console.log('No more data in response.')
+      callback(res.headers, d)
+      req.abort()
+    })
   })
-});
 
-req.on('error', (e) => {
-  console.log(`problem with request: ${e.message}`);
-});
 
-req.end();
+  // req.on('error', (e) => {
+  //   console.log(`problem with request: ${e.message}`);
+  // });
+  req.end()
+}
+
+
+// request({hostname: 'sun.aidaojia.com',path:'/pages/login.html'}, (header,body) => {
+//
+// })
+
+module.exports = request
