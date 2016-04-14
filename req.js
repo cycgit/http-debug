@@ -1,10 +1,7 @@
 var http = require('http');
 
-
 var options = {
   hostname: 'tms.aidaojia.com',
-  path: '/static/img/img3.jpg',
-  method: 'GET'
 };
 
 var req = http.request(options, (res) => {
@@ -13,8 +10,8 @@ var req = http.request(options, (res) => {
 
   res.setEncoding('utf8');
   res.on('data', (chunk) => {
-      console.log(chunk.size);
-    // console.log(`BODY: ${chunk}`);
+    //   console.log('data coming');
+    console.log(`BODY: ${chunk}`);
   });
 
 

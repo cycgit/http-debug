@@ -1,31 +1,28 @@
 var http = require('http');
 var url = require('url')
 
-function proxy(req, res) {
+function proxy(cReq, cRes) {
+    var u = url.parse(cReq.url);
 
-    var info = url.parse(req.url)
-    console.log(info);
+    console.log(cReq.url)
 
-    var proxyreq = http.request(info, (proxyres) => {
-        proxyres.setEncoding('utf8');
+    var options = {
+        hostname : u.hostname,
+        port     : u.port || 80,
+        path     : u.path,
+        method     : cReq.method,
+        headers     : cReq.headers
+    };
 
-        // console.log(proxyres)
-        // proxyres.on('data', (chunk) => {
-        //     res.write(chunk)
-        // });
-        //
-        //     proxyres.on('end', () => {
-        //         res.statusCode = proxyres.statusCode
-        //         res.writeHead(200, proxyres.headers)
-        //         res.end()
-        //
-        //         proxyreq.abort()
-        //     })
+    var pReq = http.request(options, function(pRes) {
+        cRes.writeHead(pRes.statusCode, pRes.headers);
+        pRes.pipe(cRes);
+    }).on('error', function(e) {
+        cRes.end();
+    });
 
-        proxyreq.abort()
-    })
+    cReq.pipe(pReq);
 
-    proxyreq.end()
 }
 
 
